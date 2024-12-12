@@ -9,7 +9,11 @@ the main model field.
 # Installation
 
 Install `django-interval` and add `django_interval` to your
-[INSTALLED_APPS](https://docs.djangoproject.com/en/stable/ref/settings/#std-setting-INSTALLED_APPS).
+[INSTALLED_APPS](https://docs.djangoproject.com/en/stable/ref/settings/#std-setting-INSTALLED_APPS)
+add the `django_interval.urls` to your `urlpatterns`:
+```
+urlpatterns += [path("", include("django_interval.urls"))]
+```
 
 Use either the `django_interval.fields.FuzzyDateParserField` or the
 `django_interval.fields.FuzzyDateRegexField` in your models. Both
