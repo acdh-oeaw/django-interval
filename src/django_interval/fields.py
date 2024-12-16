@@ -3,9 +3,12 @@ from datetime import date
 from typing import Callable, Tuple
 
 from django.db.models import CharField, DateField
+from django.contrib.contenttypes.models import ContentType
 from django.forms import ValidationError
+from django.urls import reverse
 
 from django_interval.utils import defaultdateparser
+from django_interval.widgets import IntervalWidget
 
 
 class GenericDateIntervalField(CharField):
@@ -26,6 +29,13 @@ class GenericDateIntervalField(CharField):
                 self.add_generated_date_field(cls, field_name)
         super().contribute_to_class(cls, name)
         setattr(cls, name, self)
+
+    def formfield(self, *args, **kwargs):
+        content_type = ContentType.objects.get_for_model(self.model)
+        natural_key = f"{content_type.app_label}.{content_type.model}"
+        interval_view = reverse("intervalview", args=[natural_key, self.name])
+        kwargs["widget"] = IntervalWidget(attrs={"data-intervaluri": interval_view})
+        return super().formfield(*args, **kwargs)
 
 
 class FuzzyDateParserField(GenericDateIntervalField):
