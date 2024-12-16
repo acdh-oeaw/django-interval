@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2](https://github.com/b1rger/django-interval/compare/v0.2.0...v0.2.2) (2024-12-16)
+
+
+### Miscellaneous Chores
+
+* release 0.2.1 ([9c6821b](https://github.com/b1rger/django-interval/commit/9c6821be61b0e18a8ed36bde8bee49cc3ae5995d))
+* release 0.2.2 ([b975c63](https://github.com/b1rger/django-interval/commit/b975c63800a921672a2e79868cbf7a1b89d2e0c8))
+
 ## [0.2.0](https://github.com/b1rger/django-interval/compare/v0.1.0...v0.2.0) (2024-12-16)
 
 
