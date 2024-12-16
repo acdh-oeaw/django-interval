@@ -43,12 +43,15 @@ class FuzzyDateParserField(GenericDateIntervalField):
         value = getattr(model_instance, name)
         if not getattr(model_instance, "skip_date_parsing", False):
             try:
-                date_sort, date_from, date_to = self.parser(value)
+                date_sort, date_from, date_to = self.calculate(value)
                 setattr(model_instance, f"{name}_date_sort", date_sort)
                 setattr(model_instance, f"{name}_date_from", date_from)
                 setattr(model_instance, f"{name}_date_to", date_to)
             except Exception as e:
                 raise ValidationError(f"Error parsing date string: {e}")
+
+    def calculate(self, date_string):
+        return self.parser(date_string)
 
     def pre_save(self, model_instance, add):
         self._populate_fields(model_instance)
@@ -93,13 +96,21 @@ class FuzzyDateRegexField(FuzzyDateParserField):
             f"Regex pattern does not contain all needed named groups (year, month, day): {match_dict}"
         )
 
+    def calculate(self, date_string) -> Tuple[date, date, date]:
+        sort_date, from_date, to_date = None, None, None
+        if match := re.search(self.sort_pattern, date_string):
+            sort_date = self._match_to_date(match)
+        if match := re.search(self.from_pattern, date_string):
+            from_date = self._match_to_date(match)
+        if match := re.search(self.to_pattern, date_string):
+            to_date = self._match_to_date(match)
+        return sort_date, from_date, to_date
+
     def _populate_fields(self, model_instance):
         super()._populate_fields(model_instance)
         name = self.attname
         value = getattr(model_instance, name)
-        if match := re.search(self.sort_pattern, value):
-            setattr(model_instance, f"{name}_date_sort", self._match_to_date(match))
-        if match := re.search(self.from_pattern, value):
-            setattr(model_instance, f"{name}_date_from", self._match_to_date(match))
-        if match := re.search(self.to_pattern, value):
-            setattr(model_instance, f"{name}_date_to", self._match_to_date(match))
+        sort_date, from_date, to_date = self.calculate(value)
+        setattr(model_instance, f"{name}_date_sort", sort_date)
+        setattr(model_instance, f"{name}_date_from", from_date)
+        setattr(model_instance, f"{name}_date_to", to_date)
