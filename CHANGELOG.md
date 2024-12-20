@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/b1rger/django-interval/compare/v0.2.2...v0.2.3) (2024-12-20)
+
+
+### Bug Fixes
+
+* **field:** handle missing interval view gracefully ([69318f0](https://github.com/b1rger/django-interval/commit/69318f0b8eb179f647b88dda954a8d797c41ce2f)), closes [#11](https://github.com/b1rger/django-interval/issues/11)
+
 ## [0.2.2](https://github.com/b1rger/django-interval/compare/v0.2.0...v0.2.2) (2024-12-16)
 
 
