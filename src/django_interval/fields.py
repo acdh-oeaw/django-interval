@@ -5,7 +5,7 @@ from typing import Callable, Tuple
 from django.db.models import CharField, DateField
 from django.contrib.contenttypes.models import ContentType
 from django.forms import ValidationError
-from django.urls import reverse
+from django.urls import reverse, NoReverseMatch
 
 from django_interval.utils import defaultdateparser
 from django_interval.widgets import IntervalWidget
@@ -33,8 +33,12 @@ class GenericDateIntervalField(CharField):
     def formfield(self, *args, **kwargs):
         content_type = ContentType.objects.get_for_model(self.model)
         natural_key = f"{content_type.app_label}.{content_type.model}"
-        interval_view = reverse("intervalview", args=[natural_key, self.name])
-        kwargs["widget"] = IntervalWidget(attrs={"data-intervaluri": interval_view})
+        try:
+            interval_view = reverse("intervalview", args=[natural_key, self.name])
+            attrs = {"data-intervaluri": interval_view}
+        except NoReverseMatch:
+            attrs = {}
+        kwargs["widget"] = IntervalWidget(attrs=attrs)
         return super().formfield(*args, **kwargs)
 
 
