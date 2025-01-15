@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/b1rger/django-interval/compare/v0.2.3...v0.2.4) (2025-01-15)
+
+
+### Bug Fixes
+
+* **fields:** add additional check for migrations ([1c2243f](https://github.com/b1rger/django-interval/commit/1c2243fa1a4cdfbe09bced4ae0aff875eb4a56c6))
+
 ## [0.2.3](https://github.com/b1rger/django-interval/compare/v0.2.2...v0.2.3) (2024-12-20)
 
 
