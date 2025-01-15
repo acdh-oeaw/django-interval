@@ -16,6 +16,8 @@ class GenericDateIntervalField(CharField):
     The check using `hasattr` and `setattr` to check the existence
     of the field is taken from https://github.com/django-money/django-money/blob/main/djmoney/models/fields.py#L255
     Without that the migrations did fail again and again ...
+    Apparently this is *also* error prone, so we check with
+    if the module is `__fake__` to know if we are running a migration.
     """
 
     def add_generated_date_field(self, cls, name):
@@ -25,7 +27,7 @@ class GenericDateIntervalField(CharField):
 
     def contribute_to_class(self, cls, name):
         for field_name in [f"{name}_date_sort", f"{name}_date_from", f"{name}_date_to"]:
-            if not hasattr(self, f"_{field_name}"):
+            if not hasattr(self, f"_{field_name}") and not cls.__module__ == "__fake__":
                 self.add_generated_date_field(cls, field_name)
         super().contribute_to_class(cls, name)
         setattr(cls, name, self)
