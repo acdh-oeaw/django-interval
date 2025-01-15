@@ -57,7 +57,7 @@ class FuzzyDateParserField(GenericDateIntervalField):
     def _populate_fields(self, model_instance):
         name = self.attname
         value = getattr(model_instance, name)
-        if not getattr(model_instance, "skip_date_parsing", False):
+        if value and not getattr(model_instance, "skip_date_parsing", False):
             try:
                 date_sort, date_from, date_to = self.calculate(value)
                 setattr(model_instance, f"{name}_date_sort", date_sort)
