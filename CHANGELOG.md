@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.5](https://github.com/b1rger/django-interval/compare/v0.2.4...v0.2.5) (2025-01-16)
+
+
+### Bug Fixes
+
+* **fields:** only parse field if there is even a value ([a282102](https://github.com/b1rger/django-interval/commit/a2821023b89a0fa8aa2e4a8ab5b4c9ed88b8dd4f))
+* **fields:** skip parsing in historical model instances ([d34e5fb](https://github.com/b1rger/django-interval/commit/d34e5fbf468699f98ce7e30077052114a598130b))
+
 ## [0.2.4](https://github.com/b1rger/django-interval/compare/v0.2.3...v0.2.4) (2025-01-15)
 
 
