@@ -57,7 +57,11 @@ class FuzzyDateParserField(GenericDateIntervalField):
     def _populate_fields(self, model_instance):
         name = self.attname
         value = getattr(model_instance, name)
-        if value and not getattr(model_instance, "skip_date_parsing", False):
+        skip_date_parsing = getattr(model_instance, "skip_date_parsing", False)
+        # this is a workaround until we find out another way to exclude
+        # historical models (from `django-simple-history`)
+        is_history_model = hasattr(model_instance, "history_id")
+        if value and not skip_date_parsing and not is_history_model:
             try:
                 date_sort, date_from, date_to = self.calculate(value)
                 setattr(model_instance, f"{name}_date_sort", date_sort)
