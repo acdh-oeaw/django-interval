@@ -4,7 +4,7 @@ from django.http import Http404
 
 
 class IntervalView(TemplateView):
-    template_name = "interval.html"
+    template_name = "django_interval/interval.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
