@@ -19,3 +19,4 @@ jobs:
         with:
           release-type: python
           package-name: django-interval
+          bump-minor-pre-major: true
