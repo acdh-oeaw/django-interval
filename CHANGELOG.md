@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.3.0](https://github.com/acdh-oeaw/django-interval/compare/v0.2.5...v0.3.0) (2025-02-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **templates:** move interval.html
+
+### Bug Fixes
+
+* **js:** add keyup trigger always, not only on load ([d524c41](https://github.com/acdh-oeaw/django-interval/commit/d524c41f996db71c1cd00095805e40d62d90806d)), closes [#31](https://github.com/acdh-oeaw/django-interval/issues/31)
+
+
+### Code Refactoring
+
+* **templates:** move interval.html ([a13a20c](https://github.com/acdh-oeaw/django-interval/commit/a13a20cd7b9f7eda4bf97053e786da932356c06b))
+
 ## [0.2.5](https://github.com/b1rger/django-interval/compare/v0.2.4...v0.2.5) (2025-01-16)
 
 
