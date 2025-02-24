@@ -43,6 +43,31 @@ class GenericDateIntervalField(CharField):
         kwargs["widget"] = IntervalWidget(attrs=attrs)
         return super().formfield(*args, **kwargs)
 
+    def calculate(self, date_string) -> Tuple[date, date, date]:
+        raise NotImplementedError
+
+    def _populate_fields(self, model_instance):
+        name = self.attname
+        value = getattr(model_instance, name)
+        skip_date_interval_populate = getattr(
+            model_instance, "skip_date_interval_populate", False
+        )
+        # this is a workaround until we find out another way to exclude
+        # historical models (from `django-simple-history`)
+        is_history_model = hasattr(model_instance, "history_id")
+        if value and not skip_date_interval_populate and not is_history_model:
+            try:
+                date_sort, date_from, date_to = self.calculate(value)
+                setattr(model_instance, f"{name}_date_sort", date_sort)
+                setattr(model_instance, f"{name}_date_from", date_from)
+                setattr(model_instance, f"{name}_date_to", date_to)
+            except Exception as e:
+                raise ValidationError(f"Error parsing date string: {e}")
+
+    def pre_save(self, model_instance, add):
+        self._populate_fields(model_instance)
+        return super().pre_save(model_instance, add)
+
 
 class FuzzyDateParserField(GenericDateIntervalField):
     def __init__(
@@ -54,28 +79,8 @@ class FuzzyDateParserField(GenericDateIntervalField):
         self.parser = parser
         super().__init__(*args, **kwargs)
 
-    def _populate_fields(self, model_instance):
-        name = self.attname
-        value = getattr(model_instance, name)
-        skip_date_parsing = getattr(model_instance, "skip_date_parsing", False)
-        # this is a workaround until we find out another way to exclude
-        # historical models (from `django-simple-history`)
-        is_history_model = hasattr(model_instance, "history_id")
-        if value and not skip_date_parsing and not is_history_model:
-            try:
-                date_sort, date_from, date_to = self.calculate(value)
-                setattr(model_instance, f"{name}_date_sort", date_sort)
-                setattr(model_instance, f"{name}_date_from", date_from)
-                setattr(model_instance, f"{name}_date_to", date_to)
-            except Exception as e:
-                raise ValidationError(f"Error parsing date string: {e}")
-
     def calculate(self, date_string):
         return self.parser(date_string)
-
-    def pre_save(self, model_instance, add):
-        self._populate_fields(model_instance)
-        return super().pre_save(model_instance, add)
 
 
 FROM_PATTERN = r"<from: (?P<day>\d{1,2})\.(?P<month>\d{1,2}).(?P<year>\d{1,4})>"
@@ -83,7 +88,7 @@ TO_PATTERN = r"<to: (?P<day>\d{1,2})\.(?P<month>\d{1,2}).(?P<year>\d{1,4})>"
 SORT_PATTERN = r"<sort: (?P<day>\d{1,2})\.(?P<month>\d{1,2}).(?P<year>\d{1,4})>"
 
 
-class FuzzyDateRegexField(FuzzyDateParserField):
+class FuzzyDateRegexField(GenericDateIntervalField):
     """This Field allows you to define different regexes for
     extracting the `from`, the `to` and the `sort` values from
     the string. So, the string "2024 <sort: 2024-06-31>" could
@@ -107,7 +112,6 @@ class FuzzyDateRegexField(FuzzyDateParserField):
 
     def _match_to_date(self, regex_match: re.Match) -> date:
         match_dict = regex_match.groupdict()
-        print(match_dict.keys())
         if match_dict.keys() >= {"day", "month", "year"}:
             month = match_dict.get("month", "01")
             day = match_dict.get("day", "01")
@@ -125,12 +129,3 @@ class FuzzyDateRegexField(FuzzyDateParserField):
         if match := re.search(self.to_pattern, date_string):
             to_date = self._match_to_date(match)
         return sort_date, from_date, to_date
-
-    def _populate_fields(self, model_instance):
-        super()._populate_fields(model_instance)
-        name = self.attname
-        value = getattr(model_instance, name)
-        sort_date, from_date, to_date = self.calculate(value)
-        setattr(model_instance, f"{name}_date_sort", sort_date)
-        setattr(model_instance, f"{name}_date_from", from_date)
-        setattr(model_instance, f"{name}_date_to", to_date)
