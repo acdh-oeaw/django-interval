@@ -83,9 +83,9 @@ class FuzzyDateParserField(GenericDateIntervalField):
         return self.parser(date_string)
 
 
-FROM_PATTERN = r"<from: (?P<day>\d{1,2})\.(?P<month>\d{1,2}).(?P<year>\d{1,4})>"
-TO_PATTERN = r"<to: (?P<day>\d{1,2})\.(?P<month>\d{1,2}).(?P<year>\d{1,4})>"
-SORT_PATTERN = r"<sort: (?P<day>\d{1,2})\.(?P<month>\d{1,2}).(?P<year>\d{1,4})>"
+FROM_PATTERN = r"<from: (?P<day>\d{1,2})\.(?P<month>\d{1,2})\.(?P<year>\d{1,4})>"
+TO_PATTERN = r"<to: (?P<day>\d{1,2})\.(?P<month>\d{1,2})\.(?P<year>\d{1,4})>"
+SORT_PATTERN = r"<sort: (?P<day>\d{1,2})\.(?P<month>\d{1,2})\.(?P<year>\d{1,4})>"
 
 
 class FuzzyDateRegexField(GenericDateIntervalField):
