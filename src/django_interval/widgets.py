@@ -7,7 +7,7 @@ from django.utils.html import html_safe
 class JSPath:
     def __str__(self):
         path = static("js/intervalwidget.js")
-        return '<script src="' + path + '" defer>'
+        return '<script src="' + path + '" defer></script>'
 
 
 class IntervalWidget(Input):
