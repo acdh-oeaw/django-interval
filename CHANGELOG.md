@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/acdh-oeaw/django-interval/compare/v0.3.1...v0.3.2) (2025-03-03)
+
+
+### Bug Fixes
+
+* **widgets:** append closing tag to script element ([117995a](https://github.com/acdh-oeaw/django-interval/commit/117995a6f8c75a70387541342729ffe429868e65))
+
 ## [0.3.1](https://github.com/acdh-oeaw/django-interval/compare/v0.3.0...v0.3.1) (2025-03-03)
 
 
