@@ -113,9 +113,10 @@ class FuzzyDateRegexField(GenericDateIntervalField):
     def _match_to_date(self, regex_match: re.Match) -> date:
         match_dict = regex_match.groupdict()
         if match_dict.keys() >= {"day", "month", "year"}:
-            month = match_dict.get("month", "01")
-            day = match_dict.get("day", "01")
-            return f"{match_dict['year']}-{month}-{day}"
+            month = int(match_dict.get("month", "01"))
+            day = int(match_dict.get("day", "01"))
+            year = int(match_dict["year"])
+            return date(year, month, day)
         raise ValueError(
             f"Regex pattern does not contain all needed named groups (year, month, day): {match_dict}"
         )
