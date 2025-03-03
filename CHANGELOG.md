@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/acdh-oeaw/django-interval/compare/v0.3.0...v0.3.1) (2025-03-03)
+
+
+### Bug Fixes
+
+* **fields:** escape special regex characters ([147b4b1](https://github.com/acdh-oeaw/django-interval/commit/147b4b15f2e79e5585325a32c658991a9ecfa8d1)), closes [#34](https://github.com/acdh-oeaw/django-interval/issues/34)
+* **widgets:** use `defer` when including the intervalwidget.js ([822835b](https://github.com/acdh-oeaw/django-interval/commit/822835be8c12d4da827c04ed90acc585444b65a4)), closes [#41](https://github.com/acdh-oeaw/django-interval/issues/41)
+
 ## [0.3.0](https://github.com/acdh-oeaw/django-interval/compare/v0.2.5...v0.3.0) (2025-02-24)
 
 
