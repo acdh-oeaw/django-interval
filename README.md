@@ -2,8 +2,8 @@
 
 django-interval is a [Django](https://www.djangoproject.com/) app. It provides
 model fields to store date information with some extra data stored in
-additional fields. The additional fields are composed of a `_sort`, a `_from`
-and a `_to` field that store data that is generated from the string stored in
+additional fields. The additional fields are composed of a `_date_sort`, a `_date_from`
+and a `_date_to` field that store data that is generated from the string stored in
 the main model field.
 
 # Installation
