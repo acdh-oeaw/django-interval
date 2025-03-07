@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.3](https://github.com/acdh-oeaw/django-interval/compare/v0.3.2...v0.3.3) (2025-03-07)
+
+
+### Bug Fixes
+
+* **fields:** use date on the parsed values to get more sensible error ([3aed7d4](https://github.com/acdh-oeaw/django-interval/commit/3aed7d47857d3e4460525718035e3058d2c0340f)), closes [#37](https://github.com/acdh-oeaw/django-interval/issues/37)
+
+
+### Documentation
+
+* **readme:** fix postfixes in Readme ([833fe5c](https://github.com/acdh-oeaw/django-interval/commit/833fe5c34e1fcf3194c09aa2ddc0fbfad340fc38))
+
 ## [0.3.2](https://github.com/acdh-oeaw/django-interval/compare/v0.3.1...v0.3.2) (2025-03-03)
 
 
