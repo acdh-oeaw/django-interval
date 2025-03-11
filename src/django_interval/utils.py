@@ -146,7 +146,7 @@ def parse_human(date_string: str) -> DateTuple:
         if type(date_sort) is tuple:
             dates.set_range(*date_sort)
         else:
-            dates.sort_date = date_sort
+            dates.sort_date = dates.from_date = dates.to_date = date_sort
     if bool(dates.from_date) != bool(dates.to_date):
         dates.sort_date = dates.from_date or dates.to_date
     return dates
