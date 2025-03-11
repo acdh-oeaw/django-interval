@@ -1,1 +1,2 @@
-{% for type, date in dates.items %}<span class="{{type}}">{{ date|date }}</span>{% endfor %}
+{% load django_interval %}
+{% date_interval to_date from_date sort_date %}
