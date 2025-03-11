@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.4.0](https://github.com/acdh-oeaw/django-interval/compare/v0.3.2...v0.4.0) (2025-03-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* **templates:** use new templatetag instead of hardcoding output
+
+### Features
+
+* **templatetags:** introduce date_interval templatetag ([1c0318b](https://github.com/acdh-oeaw/django-interval/commit/1c0318b24ec5b337b1d8938f9e1ee669dd2dc9a3))
+
+
+### Bug Fixes
+
+* **fields:** use date on the parsed values to get more sensible error ([3aed7d4](https://github.com/acdh-oeaw/django-interval/commit/3aed7d47857d3e4460525718035e3058d2c0340f)), closes [#37](https://github.com/acdh-oeaw/django-interval/issues/37)
+* **templates:** use new templatetag instead of hardcoding output ([13d9f6c](https://github.com/acdh-oeaw/django-interval/commit/13d9f6c79a7dc9a0929d3d9f0ddbde95e6a0fc2f)), closes [#47](https://github.com/acdh-oeaw/django-interval/issues/47)
+* **utils:** set all the dates also on day-specific date values ([a356d9d](https://github.com/acdh-oeaw/django-interval/commit/a356d9d9cfcf547c62bb5e45c18515c36aed9067))
+
+
+### Documentation
+
+* **readme:** fix postfixes in Readme ([833fe5c](https://github.com/acdh-oeaw/django-interval/commit/833fe5c34e1fcf3194c09aa2ddc0fbfad340fc38))
+
 ## [0.3.2](https://github.com/acdh-oeaw/django-interval/compare/v0.3.1...v0.3.2) (2025-03-03)
 
 
