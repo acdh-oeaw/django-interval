@@ -16,7 +16,7 @@ class IntervalView(TemplateView):
         if field := getattr(content_type.model_class(), kwargs.get("field"), None):
             if datestring := self.request.GET.get("datestring"):
                 sort_date, from_date, to_date = field.calculate(datestring)
-                context["dates"] = {
+                context = {
                     "sort_date": sort_date,
                     "from_date": from_date,
                     "to_date": to_date,
