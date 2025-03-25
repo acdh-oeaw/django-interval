@@ -14,12 +14,15 @@ class IntervalView(TemplateView):
         content_type = ContentType.objects.get_by_natural_key(app_label, model)
 
         if field := getattr(content_type.model_class(), kwargs.get("field"), None):
+            context = {}
             if datestring := self.request.GET.get("datestring"):
-                sort_date, from_date, to_date = field.calculate(datestring)
-                context = {
-                    "sort_date": sort_date,
-                    "from_date": from_date,
-                    "to_date": to_date,
-                }
+                context["original_string"] = datestring
+                try:
+                    sort_date, from_date, to_date = field.calculate(datestring)
+                    context["sort_date"] = sort_date
+                    context["from_date"] = from_date
+                    context["to_date"] = to_date
+                except Exception as e:
+                    context["error"] = str(e)
             return context
         raise Http404
