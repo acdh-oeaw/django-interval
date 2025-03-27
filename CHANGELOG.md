@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.0](https://github.com/acdh-oeaw/django-interval/compare/v0.4.0...v0.5.0) (2025-03-27)
+
+
+### Features
+
+* **fields:** set the auto_created attribute of the auto created fields ([bd50343](https://github.com/acdh-oeaw/django-interval/commit/bd50343852b826de06b9ac39d325f056e570b3b5))
+* **filters:** add YearIntervalRangeFilter and DateIntervalRangeFilter ([ed44d8a](https://github.com/acdh-oeaw/django-interval/commit/ed44d8a8d50a4b72fff24455cb0bb166f890fac4))
+
+
+### Bug Fixes
+
+* **views:** catch exception and pass error message on to template ([4d77f5c](https://github.com/acdh-oeaw/django-interval/commit/4d77f5cb9dbb6caca883e179d8fef43f68a4ca65)), closes [#53](https://github.com/acdh-oeaw/django-interval/issues/53)
+
 ## [0.4.0](https://github.com/acdh-oeaw/django-interval/compare/v0.3.2...v0.4.0) (2025-03-11)
 
 
