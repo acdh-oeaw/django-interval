@@ -55,14 +55,19 @@ class GenericDateIntervalField(CharField):
         # this is a workaround until we find out another way to exclude
         # historical models (from `django-simple-history`)
         is_history_model = hasattr(model_instance, "history_id")
-        if value and not skip_date_interval_populate and not is_history_model:
-            try:
-                date_sort, date_from, date_to = self.calculate(value)
-                setattr(model_instance, f"{name}_date_sort", date_sort)
-                setattr(model_instance, f"{name}_date_from", date_from)
-                setattr(model_instance, f"{name}_date_to", date_to)
-            except Exception as e:
-                raise ValidationError(f"Error parsing date string: {e}")
+        if not skip_date_interval_populate and not is_history_model:
+            if not value:
+                setattr(model_instance, f"{name}_date_sort", None)
+                setattr(model_instance, f"{name}_date_from", None)
+                setattr(model_instance, f"{name}_date_to", None)
+            else:
+                try:
+                    date_sort, date_from, date_to = self.calculate(value)
+                    setattr(model_instance, f"{name}_date_sort", date_sort)
+                    setattr(model_instance, f"{name}_date_from", date_from)
+                    setattr(model_instance, f"{name}_date_to", date_to)
+                except Exception as e:
+                    raise ValidationError(f"Error parsing date string: {e}")
 
     def pre_save(self, model_instance, add):
         self._populate_fields(model_instance)
