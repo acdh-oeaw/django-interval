@@ -21,7 +21,7 @@ class GenericDateIntervalField(CharField):
     """
 
     def add_generated_date_field(self, cls, name):
-        date_field = DateField(editable=False, blank=True, null=True, auto_created=True)
+        date_field = DateField(editable=False, blank=True, null=True)
         cls.add_to_class(name, date_field)
         setattr(self, f"_{name}", date_field)
 
