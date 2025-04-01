@@ -73,6 +73,10 @@ class GenericDateIntervalField(CharField):
         self._populate_fields(model_instance)
         return super().pre_save(model_instance, add)
 
+    def save_form_data(self, instance, data):
+        super().save_form_data(instance, data)
+        self._populate_fields(instance)
+
 
 class FuzzyDateParserField(GenericDateIntervalField):
     def __init__(
