@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.1](https://github.com/acdh-oeaw/django-interval/compare/v0.5.0...v0.5.1) (2025-04-01)
+
+
+### Bug Fixes
+
+* **fields:** explicitly populate generated fields during form save ([f1dad46](https://github.com/acdh-oeaw/django-interval/commit/f1dad46d1f884cd2bed4c7f602e2571ba899adfc)), closes [#58](https://github.com/acdh-oeaw/django-interval/issues/58)
+* **fields:** unset auto fields if main field is empty ([0c4996b](https://github.com/acdh-oeaw/django-interval/commit/0c4996bf27cd163ee2eb2370298a46178c28d4cc)), closes [#56](https://github.com/acdh-oeaw/django-interval/issues/56)
+
 ## [0.5.0](https://github.com/acdh-oeaw/django-interval/compare/v0.4.0...v0.5.0) (2025-03-27)
 
 
