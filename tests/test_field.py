@@ -1,9 +1,6 @@
 from django.test import TestCase
 from tests.models import DjangoIntervalTestModel
-import django
 from datetime import date as dt
-
-django.setup()
 
 
 class FuzzyDateParserFieldTest(TestCase):
