@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/acdh-oeaw/django-interval/compare/v0.5.1...v0.5.2) (2025-05-21)
+
+
+### Dependencies
+
+* **dev:** add pytest and pytest-django as dev dependencies ([1ce7960](https://github.com/acdh-oeaw/django-interval/commit/1ce7960488146bcc31bf94c9326bf29726888fad))
+
 ## [0.5.1](https://github.com/acdh-oeaw/django-interval/compare/v0.5.0...v0.5.1) (2025-04-01)
 
 
