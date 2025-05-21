@@ -10,14 +10,8 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pytest>=8.3.5",
-    "pytest-django>=4.11.1",
     "ruff>=0.8.2",
 ]
-
-[tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "tests.settings"
-python_files = "tests/test_*.py"
 
 [build-system]
 requires = ["hatchling"]
