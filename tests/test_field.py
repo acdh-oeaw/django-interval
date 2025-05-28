@@ -29,6 +29,25 @@ class FuzzyDateParserFieldTest(TestCase):
         assert retrieved.fuzzy_parser_field_date_from == dt.fromisoformat("2024-01-01")
         assert retrieved.fuzzy_parser_field_date_to == dt.fromisoformat("2024-12-31")
 
+    def test_single_valid_ISO_date_in_angled_brackets(self):
+        """Field contains random extra text outside angled brackets to demonstrate that's allowed."""
+        obj = DjangoIntervalTestModel.objects.create(fuzzy_parser_field="<20241101> (TBD, check)")
+        obj.save()
+        retrieved = DjangoIntervalTestModel.objects.get(pk=obj.pk)
+        assert retrieved.fuzzy_parser_field == "<20241101> (TBD, check)"
+        assert retrieved.fuzzy_parser_field_date_sort == dt.fromisoformat("2024-11-01")
+        assert retrieved.fuzzy_parser_field_date_from is None
+        assert retrieved.fuzzy_parser_field_date_to is None
+
+    def test_triple_valid_ISO_dates_in_angled_brackets(self):
+        """Dates are surrounded by additional, superfluous whitespace to demonstrate that's allowed."""
+        obj = DjangoIntervalTestModel.objects.create(fuzzy_parser_field="< 2024-11-15, 2024-11-01, 2024-12-01 >")
+        obj.save()
+        retrieved = DjangoIntervalTestModel.objects.get(pk=obj.pk)
+        assert retrieved.fuzzy_parser_field == "< 2024-11-15, 2024-11-01, 2024-12-01 >"
+        assert retrieved.fuzzy_parser_field_date_sort == dt.fromisoformat("2024-11-15")
+        assert retrieved.fuzzy_parser_field_date_from == dt.fromisoformat("2024-11-01")
+        assert retrieved.fuzzy_parser_field_date_to == dt.fromisoformat("2024-12-01")
 
 class RegexDateParserFieldTest(TestCase):
     def test_regex_date(self):
