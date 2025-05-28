@@ -108,9 +108,22 @@ def parse_date_range_individual(datestring: str, ab=False, bis=False):
 
 
 def parse_angle_brackets(date_string: str) -> DateTuple:
+    """
+    Identify ISO dates in a (sub)string enclosed in angled brackets and
+    assign them to DateTuple's fields.
+
+    Only single dates and sets of three dates (separated by commas)
+    are considered valid; other numbers of dates will raise an error.
+    When a single date is found, it is used as DateTuple's sort_date value.
+    When the string in angled brackets is made up of three dates, they are
+    assigned to DateTuple's fields in the order: sort_date, from_date, to_date
+
+    Examples for valid inputs:
+        < 2013-07-11, 2013-07-11, 2013-08-20 >
+        <1980-W04-4,1980-W01,1980-W08>
+        <19991231>
+    """
     dates = DateTuple()
-    # if there are one or three dates inbetween angle brackets
-    # we use those as source for the dates
     if match := re.match(r".*<(?P<dates>.*)>.*", date_string):
         match match.group("dates").split(","):
             case [date_sort_string, date_from_string, date_to_string]:
