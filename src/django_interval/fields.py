@@ -98,12 +98,34 @@ SORT_PATTERN = r"<sort: (?P<day>\d{1,2})\.(?P<month>\d{1,2})\.(?P<year>\d{1,4})>
 
 
 class FuzzyDateRegexField(GenericDateIntervalField):
-    """This Field allows you to define different regexes for
-    extracting the `from`, the `to` and the `sort` values from
-    the string. So, the string "2024 <sort: 2024-06-31>" could
-    be parsed so that the `_date_sort` field is set to
-    datetime.date(2024, 6, 1).
-    The pattern hat to contain a <year> group, a <month> group and a <day> group.
+    """
+    Use regular expressions to differentiate between "from", "to" and "sort"
+    dates.
+
+    This field allows you to define how input dates need to be formatted to
+    be successfully identified as/parsed out as the three available dates
+    and to get stored in the relevant `_date_from`, `_date_to` and
+    `_date_sort` fields.
+
+    Each of the three attributes `from_pattern`, `to_pattern` and `sort_pattern`
+    can be assigned its own RegEx pattern, which allows you to use a custom
+    prefix or identifier for each date. The only required elements all
+    patterns have (to have) in common are named RegEx groups for the
+    <year>, <month> and <day> portions of each date.
+    If you don't provide your own patterns, three pre-defined patterns,
+    `FROM_PATTERN`, `TO_PATTERN`, `SORT_PATTERN`, are used as fallbacks.
+    They expect dates to be enclosed in angled brackets, to follow German
+    date formatting rules and to be identified via prefixes "from: ", "to: "
+    and "sort: ". Example for from date: <from: 24.12.2024>
+
+    A custom pattern could e.g. require dates to follow the ISO 8601 standard,
+    i.e. be formatted YYYY-MM-DD, but use different characters to identify
+    or separate individual dates.
+    Example:
+        "2024 (sort=2024-06-01)" may be a choice to have `_date_sort` set
+        to datetime.date(2024, 6, 1). To achieve this, the following
+        regular expression could be used with `sort_pattern`:
+        r"\(sort=(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})\)"
     """
 
     def __init__(
