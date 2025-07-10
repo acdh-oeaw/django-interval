@@ -121,7 +121,9 @@ def parse_angle_brackets(date_string: str) -> DateTuple:
                 dates.sort_date = datetime.fromisoformat(date_sort_string.strip())
             case _:
                 raise ValueError(
-                    "Incorrect number of dates given. Within angle brackets only one or three (separated by commas) are allowed."
+                    "Incorrect number of dates given. Within angled brackets, "
+                    "only either one or three dates (separated by commas) are "
+                    "allowed."
                 )
     return dates
 
