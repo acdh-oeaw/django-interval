@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.5.2](https://github.com/acdh-oeaw/django-interval/compare/v0.5.1...v0.5.2) (2025-12-23)
+
+
+### Bug Fixes
+
+* **utils:** update error message ([ed7f52d](https://github.com/acdh-oeaw/django-interval/commit/ed7f52d7d6d61288ae724500228d88bfb4f3cec5))
+
+
+### Dependencies
+
+* **dev:** add pytest and pytest-django as dev dependencies ([1ce7960](https://github.com/acdh-oeaw/django-interval/commit/1ce7960488146bcc31bf94c9326bf29726888fad))
+
+
+### Documentation
+
+* **fields:** expand FuzzyDateRegexField documentation ([c4a0ee4](https://github.com/acdh-oeaw/django-interval/commit/c4a0ee4b9fdad73df731dc123d96ef7af405b6dd))
+* **fields:** use `r` on docstring because it contains a regex ([e87a18f](https://github.com/acdh-oeaw/django-interval/commit/e87a18f95784ea0b83ff7f161e841e795f8df027))
+* **utils:** document parse_angle_brackets properly ([f4ab8d3](https://github.com/acdh-oeaw/django-interval/commit/f4ab8d35116f622988ab84d8ef15e00d060fc936))
+
 ## [0.5.1](https://github.com/acdh-oeaw/django-interval/compare/v0.5.0...v0.5.1) (2025-04-01)
 
 
