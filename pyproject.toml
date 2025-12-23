@@ -14,6 +14,10 @@ requires-python = ">=3.11"
 dependencies = [
     "django>=4",
 ]
+[project.urls]
+source = "https://github.com/acdh-oeaw/django-interval"
+changelog = "https://github.com/acdh-oeaw/django-interval/blob/main/CHANGELOG.md"
+issues = "https://github.com/acdh-oeaw/django-interval/issues"
 
 [dependency-groups]
 dev = [
