@@ -98,7 +98,7 @@ SORT_PATTERN = r"<sort: (?P<day>\d{1,2})\.(?P<month>\d{1,2})\.(?P<year>\d{1,4})>
 
 
 class FuzzyDateRegexField(GenericDateIntervalField):
-    """
+    r"""
     Use regular expressions to differentiate between "from", "to" and "sort"
     dates.
 
