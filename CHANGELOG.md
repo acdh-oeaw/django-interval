@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3](https://github.com/acdh-oeaw/django-interval/compare/v0.5.2...v0.5.3) (2026-01-21)
+
+
+### Bug Fixes
+
+* **fields:** use `reverse_lazy` instead of `reverse` ([53312d2](https://github.com/acdh-oeaw/django-interval/commit/53312d2bb9e312fb3b46b3a60a0a3e4a08dc3768)), closes [#92](https://github.com/acdh-oeaw/django-interval/issues/92)
+
 ## [0.5.2](https://github.com/acdh-oeaw/django-interval/compare/v0.5.1...v0.5.2) (2025-12-23)
 
 
