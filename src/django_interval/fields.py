@@ -1,5 +1,6 @@
 import re
 from datetime import date
+from functools import partial
 from typing import Callable, Tuple
 
 from django.db.models import CharField, DateField
@@ -12,6 +13,33 @@ from django_interval.utils import defaultdateparser
 from django_interval.widgets import IntervalWidget
 
 
+def _child_field_pre_save(self, model_instance, add):
+    skip_date_interval_populate = getattr(
+        model_instance, "skip_date_interval_populate", False
+    )
+    # this is a workaround until we find out another way to exclude
+    # historical models (from `django-simple-history`)
+    is_history_model = hasattr(model_instance, "history_id")
+
+    value = getattr(model_instance, self.parent_name)
+    if not skip_date_interval_populate and not is_history_model:
+        if not value:
+            setattr(model_instance, self.attname, None)
+        else:
+            try:
+                parent_field = model_instance._meta.get_field(self.parent_name)
+                results = [
+                    f"{self.parent_name}_date_sort",
+                    f"{self.parent_name}_date_from",
+                    f"{self.parent_name}_date_to",
+                ]
+                values = dict(zip(results, parent_field.calculate(value)))
+                setattr(model_instance, self.attname, values[self.attname])
+            except Exception as e:
+                raise ValidationError(f"Error parsing date string: {e}")
+    return type(self).pre_save(self, model_instance, add)
+
+
 class GenericDateIntervalField(CharField):
     """Add additional fields to the model containing this field
     The check using `hasattr` and `setattr` to check the existence
@@ -21,15 +49,17 @@ class GenericDateIntervalField(CharField):
     if the module is `__fake__` to know if we are running a migration.
     """
 
-    def add_generated_date_field(self, cls, name):
+    def add_generated_date_field(self, cls, name, parent_name):
         date_field = DateField(editable=False, blank=True, null=True, auto_created=True)
+        date_field.pre_save = partial(_child_field_pre_save, date_field)
+        date_field.parent_name = parent_name
         cls.add_to_class(name, date_field)
         setattr(self, f"_{name}", date_field)
 
     def contribute_to_class(self, cls, name):
         for field_name in [f"{name}_date_sort", f"{name}_date_from", f"{name}_date_to"]:
             if not hasattr(self, f"_{field_name}") and not cls.__module__ == "__fake__":
-                self.add_generated_date_field(cls, field_name)
+                self.add_generated_date_field(cls, field_name, name)
         super().contribute_to_class(cls, name)
         setattr(cls, name, self)
 
@@ -46,37 +76,6 @@ class GenericDateIntervalField(CharField):
 
     def calculate(self, date_string) -> Tuple[date, date, date]:
         raise NotImplementedError
-
-    def _populate_fields(self, model_instance):
-        name = self.attname
-        value = getattr(model_instance, name)
-        skip_date_interval_populate = getattr(
-            model_instance, "skip_date_interval_populate", False
-        )
-        # this is a workaround until we find out another way to exclude
-        # historical models (from `django-simple-history`)
-        is_history_model = hasattr(model_instance, "history_id")
-        if not skip_date_interval_populate and not is_history_model:
-            if not value:
-                setattr(model_instance, f"{name}_date_sort", None)
-                setattr(model_instance, f"{name}_date_from", None)
-                setattr(model_instance, f"{name}_date_to", None)
-            else:
-                try:
-                    date_sort, date_from, date_to = self.calculate(value)
-                    setattr(model_instance, f"{name}_date_sort", date_sort)
-                    setattr(model_instance, f"{name}_date_from", date_from)
-                    setattr(model_instance, f"{name}_date_to", date_to)
-                except Exception as e:
-                    raise ValidationError(f"Error parsing date string: {e}")
-
-    def pre_save(self, model_instance, add):
-        self._populate_fields(model_instance)
-        return super().pre_save(model_instance, add)
-
-    def save_form_data(self, instance, data):
-        super().save_form_data(instance, data)
-        self._populate_fields(instance)
 
 
 class FuzzyDateParserField(GenericDateIntervalField):
