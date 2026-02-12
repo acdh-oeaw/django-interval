@@ -1,6 +1,6 @@
 [project]
 name = "django-interval"
-version = "0.5.3"
+version = "0.5.4"
 description = "A Django field for storing fuzzy date information"
 readme = "README.md"
 authors = [
