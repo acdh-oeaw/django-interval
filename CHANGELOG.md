@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.4](https://github.com/acdh-oeaw/django-interval/compare/v0.5.3...v0.5.4) (2026-02-12)
+
+
+### Bug Fixes
+
+* set the values in the `pre_save` of the auto fields themselves ([42fd80b](https://github.com/acdh-oeaw/django-interval/commit/42fd80bcf472881741b72d9031993caad0be07d1)), closes [#62](https://github.com/acdh-oeaw/django-interval/issues/62)
+
 ## [0.5.3](https://github.com/acdh-oeaw/django-interval/compare/v0.5.2...v0.5.3) (2026-01-21)
 
 
